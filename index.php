@@ -108,7 +108,7 @@ function CalculateTotalCoins($blockReward, $blocks, $subsidy) {
 			<tr><td><b>Blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
 			<tr><td><b>Bitcoins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>
 			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($info['difficulty']);?></td></tr>
-			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($bitcoin->getnetworkhashps() / 1000 / 1000 / 1000) . 'GH/s';?></td></tr>
+			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($bitcoin->getnetworkhashps() / 1000 / 1000 / 1000 / 1000 / 1000) . 'PH/s';?></td></tr>
 		</table>
 		<div style="text-align:center">
 			<img src="../images/bitcoin.png" width="100px"; height="100px">
