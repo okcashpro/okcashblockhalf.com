@@ -24,6 +24,7 @@ $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
 $blockString = '+' . $blockHalvingEstimation . ' second';
 $blockReward = CalculateRewardPerBlock($blockStartingReward, $blocks, $blockHalvingSubsidy);
 $coinsRemaining = $blocksRemaining * $blockReward;
+$inflationRate = CalculateInflationRate($coins, $blockReward, $blocksPerDay);
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -60,6 +61,11 @@ function CalculateTotalCoins($blockReward, $blocks, $subsidy) {
 		return $coins;
 	}
 }
+
+function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
+	return pow((($totalCoins + $blockReward) / $totalCoins), (365 * $blocksPerDay)) - 1;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -101,6 +107,7 @@ function CalculateTotalCoins($blockReward, $blocks, $subsidy) {
 		<table class="table table-striped">
 			<tr><td><b>Total Bitcoins:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
 			<tr><td><b>Total Bitcoins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
+			<tr><td><b>Bitcoin inflation rate:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
 			<tr><td><b>Percentage of total Bitcoins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 2)?>%</td></tr>
 			<tr><td><b>Total Blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
