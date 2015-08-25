@@ -107,7 +107,7 @@ function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
 		<table class="table table-striped">
 			<tr><td><b>Total Bitcoins:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
 			<tr><td><b>Total Bitcoins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
-			<tr><td><b>Bitcoin inflation rate:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
+			<tr><td><b>Annual Bitcoin inflation rate:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
 			<tr><td><b>Percentage of total Bitcoins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 2)?>%</td></tr>
 			<tr><td><b>Total Blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
