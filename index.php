@@ -25,6 +25,7 @@ $blockString = '+' . $blockHalvingEstimation . ' second';
 $blockReward = CalculateRewardPerBlock($blockStartingReward, $blocks, $blockHalvingSubsidy);
 $coinsRemaining = $blocksRemaining * $blockReward;
 $inflationRate = CalculateInflationRate($coins, $blockReward, $blocksPerDay);
+$price = 225; // change to dynamic way of getting price
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -107,13 +108,16 @@ function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
 		<table class="table table-striped">
 			<tr><td><b>Total Bitcoins:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
 			<tr><td><b>Total Bitcoins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
-			<tr><td><b>Annual Bitcoin inflation rate:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
 			<tr><td><b>Percentage of total Bitcoins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 2)?>%</td></tr>
-			<tr><td><b>Total Blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
+			<tr><td><b>Bitcoin price (USD):</b></td><td align = "right">$<?=number_format($price, 2);?></td></tr>
+			<tr><td><b>Market capitilsation (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
+			<tr><td><b>Bitcoins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>	
+			<tr><td><b>Bitcoin inflation rate per annum:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
+			<tr><td><b>Bitcoin inflation per day (USD):</b></td><td align = "right">$<?=number_format($blocksPerDay * $blockReward * $price);?></td></tr>
+			<tr><td><b>Total blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
 			<tr><td><b>Block generation time:</b></td><td align = "right"><?=$blockTargetSpacing?> minutes</td></tr>
 			<tr><td><b>Blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
-			<tr><td><b>Bitcoins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>
 			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($info['difficulty']);?></td></tr>
 			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($bitcoin->getnetworkhashps() / 1000 / 1000 / 1000 / 1000 / 1000) . 'PH/s';?></td></tr>
 		</table>
