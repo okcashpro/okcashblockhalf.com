@@ -123,6 +123,8 @@ function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
 		</table>
 		<div style="text-align:center">
 			<img src="../images/bitcoin.png" width="100px"; height="100px">
+			<br/>
+			<h2><a href="http://www.litecoinblockhalf.com">Litecoin Block Halving Countdown</a></h2>
 		</div>
 	</div>
 </body>
