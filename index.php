@@ -1,7 +1,7 @@
 <?php
 require_once 'jsonRPCClient.php';
 
-$bitcoin = new jsonRPCClient('http://user:pw@127.0.0.1:8332/');
+$bitcoin = new jsonRPCClient('http://user:pass@127.0.0.1:8332/');
 
 try {
 	$info = $bitcoin->getinfo();
@@ -28,7 +28,7 @@ $nextHalvingHeight = $blocks + $blocksRemaining;
 $inflationRate = CalculateInflationRate($coins, $blockReward, $blocksPerDay);
 $inflationRateNextHalving = CalculateInflationRate(CalculateTotalCoins($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), 
 	CalculateRewardPerBlock($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), $blocksPerDay);
-$price = 225; // change to dynamic way of getting price
+$price = GetPrice();
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -68,6 +68,13 @@ function CalculateTotalCoins($blockReward, $blocks, $subsidy) {
 
 function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
 	return pow((($totalCoins + $blockReward) / $totalCoins), (365 * $blocksPerDay)) - 1;
+}
+
+function GetPrice() {
+	$file = fopen("price.txt", "r") or die("Unable to open price file!");
+	$result = fread($file,filesize("price.txt"));
+	fclose($file);
+	return $result;
 }
 
 ?>
@@ -110,22 +117,22 @@ function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
 		</div>
 		<table class="table table-striped">
 			<tr><td><b>Total Bitcoins in circulation:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
-			<tr><td><b>Total Bitcoins to be produced:</b></td><td align = "right"><?=number_format($maxcoins)?></td></tr>
+			<tr><td><b>Total Bitcoins to ever be produced:</b></td><td align = "right"><?=number_format($maxCoins)?></td></tr>
 			<tr><td><b>Percentage of total Bitcoins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 4)?>%</td></tr>
 			<tr><td><b>Total Bitcoins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
 			<tr><td><b>Bitcoin price (USD):</b></td><td align = "right">$<?=number_format($price, 2);?></td></tr>
-			<tr><td><b>Market capitilsation (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
-			<tr><td><b>Approximate Bitcoins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>	
+			<tr><td><b>Market capitilzation (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
+			<tr><td><b>Bitcoins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>	
 			<tr><td><b>Bitcoin inflation rate per annum:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
 			<tr><td><b>Bitcoin inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($inflationRateNextHalving * 100 / 1, 2);?>%</td></tr>
 			<tr><td><b>Bitcoin inflation per day (USD):</b></td><td align = "right">$<?=number_format($blocksPerDay * $blockReward * $price);?></td></tr>
-			<tr><td><b>Bitcoin inflation until next blockhalf event: (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
+			<tr><td><b>Bitcoin inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
 			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=$blockTargetSpacing?> minutes</td></tr>
 			<tr><td><b>Approximate blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
 			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($info['difficulty']);?></td></tr>
-			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($bitcoin->getnetworkhashps() / 1000 / 1000 / 1000 / 1000 / 1000 / 1000) . 'Exahashes/s';?></td></tr>
+			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($bitcoin->getnetworkhashps() / 1000 / 1000 / 1000 / 1000 / 1000 / 1000, 2) . ' Exahashes/s';?></td></tr>
 		</table>
 		<div style="text-align:center">
 			<img src="../images/bitcoin.png" width="100px"; height="100px">
