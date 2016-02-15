@@ -19,16 +19,17 @@ $maxCoins = 21000000;
 $blocks = $info['blocks'];
 $coins = CalculateTotalCoins($blockStartingReward, $blocks, $blockHalvingSubsidy);
 $blocksRemaining = CalculateRemainingBlocks($blocks, $blockHalvingSubsidy);
-$blocksPerDay = (60 / $blockTargetSpacing) * 24;
+$avgBlockTime = GetFileContents("timebetweenblocks.txt");
+$blocksPerDay = (60 / $avgBlockTime) * 24;
 $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
-$blockString = '+' . $blockHalvingEstimation . ' second';
+$blockString = '+' . (int)$blockHalvingEstimation . ' second';
 $blockReward = CalculateRewardPerBlock($blockStartingReward, $blocks, $blockHalvingSubsidy);
 $coinsRemaining = $blocksRemaining * $blockReward;
 $nextHalvingHeight = $blocks + $blocksRemaining;
 $inflationRate = CalculateInflationRate($coins, $blockReward, $blocksPerDay);
 $inflationRateNextHalving = CalculateInflationRate(CalculateTotalCoins($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), 
 	CalculateRewardPerBlock($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), $blocksPerDay);
-$price = GetPrice();
+$price = GetFileContents("price.txt");
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -70,9 +71,9 @@ function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
 	return pow((($totalCoins + $blockReward) / $totalCoins), (365 * $blocksPerDay)) - 1;
 }
 
-function GetPrice() {
-	$file = fopen("price.txt", "r") or die("Unable to open price file!");
-	$result = fread($file,filesize("price.txt"));
+function GetFileContents($filename) {
+	$file = fopen($filename, "r") or die("Unable to open file!");
+	$result = fread($file,filesize($filename));
 	fclose($file);
 	return $result;
 }
@@ -129,7 +130,7 @@ function GetPrice() {
 			<tr><td><b>Bitcoin inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
-			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=$blockTargetSpacing?> minutes</td></tr>
+			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=number_format($avgBlockTime, 2);?> minutes</td></tr>
 			<tr><td><b>Approximate blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
 			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($info['difficulty']);?></td></tr>
 			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($bitcoin->getnetworkhashps() / 1000 / 1000 / 1000 / 1000 / 1000 / 1000, 2) . ' Exahashes/s';?></td></tr>
