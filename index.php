@@ -112,7 +112,7 @@ function GetFileContents($filename) {
 			});
 		</script>
 		<div style="text-align:center">
-			Reward-Drop ETA date: <strong><?=date('m-d-Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
+			Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
 			<p>The Bitcoin block mining reward halves every <?=number_format($blockHalvingSubsidy)?> blocks, the coin reward will decrease from <?=$blockReward?> to <?=$blockReward / 2 ?> coins. 
 			<br/><br/>
 		</div>
