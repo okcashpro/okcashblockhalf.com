@@ -120,6 +120,7 @@ function GetFileContents($filename) {
 			<tr><td><b>Total Bitcoins in circulation:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
 			<tr><td><b>Total Bitcoins to ever be produced:</b></td><td align = "right"><?=number_format($maxCoins)?></td></tr>
 			<tr><td><b>Percentage of total Bitcoins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 4)?>%</td></tr>
+			<tr><td><b>Total Bitcoins left to mine:</b></td><td align = "right"><?=number_format($maxCoins - $coins)?></td></tr>
 			<tr><td><b>Total Bitcoins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
 			<tr><td><b>Bitcoin price (USD):</b></td><td align = "right">$<?=number_format($price, 2);?></td></tr>
 			<tr><td><b>Market capitilzation (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
