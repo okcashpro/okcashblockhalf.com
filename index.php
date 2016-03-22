@@ -19,7 +19,12 @@ $maxCoins = 21000000;
 $blocks = $info['blocks'];
 $coins = CalculateTotalCoins($blockStartingReward, $blocks, $blockHalvingSubsidy);
 $blocksRemaining = CalculateRemainingBlocks($blocks, $blockHalvingSubsidy);
+
 $avgBlockTime = GetFileContents("timebetweenblocks.txt");
+if (empty($avgBlockTime)) {
+	$avgBlockTime = $blockTargetSpacing;
+}
+
 $blocksPerDay = (60 / $avgBlockTime) * 24;
 $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
 $blockString = '+' . (int)$blockHalvingEstimation . ' second';
