@@ -1,7 +1,9 @@
 <?php
-$price = file_get_contents('https://api.bitcoinaverage.com/ticker/global/USD/last');
+$data = file_get_contents('https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD');
+$price = json_decode($data, true);
+$btcPrice = (float)$price["last"];
 $file = "price.txt";
 $fh = fopen($file, 'w') or die("can't open file");
-fwrite($fh, $price);
+fwrite($fh, $btcPrice);
 fclose($fh);
 ?>
