@@ -1,7 +1,7 @@
 <?php
 require_once 'easyokcash.php';
 
-$okcash = new Okcash('TestNumberOne01','PasswordTest0101','http://64.137.240.64','6969');
+$okcash = new Okcash('TestNumberOne01','PasswordTest0101','localhost','6969');
 
 try {
 	$info = $okcash->getinfo();
@@ -144,6 +144,7 @@ function GetFileContents($filename) {
 		<div style="text-align:center">
 			<img src="../images/okcash.png" width="100px"; height="100px">
 			<br/>
+			<h2><a href="http://www.bitcoinblockhalf.com" target="_blank">Bitcoin Block Halving Countdown</a></h2>
 			<br/><br/>
 		</div>
 	</div>
