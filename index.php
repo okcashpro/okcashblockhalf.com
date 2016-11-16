@@ -11,11 +11,12 @@ try {
 }
 
 // Okcash settings
-$blockStartingReward = 50;
+$blockStartingReward = 14;
 $blockHalvingSubsidy = 1022514;
-$blockTargetSpacing = 1;
+$blockTargetSpacing = 1.12;
 $maxCoins = 105000000;
 
+$difficulty = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getdifficulty"), true);
 $blocks = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getblockcount"), true);
 $coins = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=circulating"), true);
 $blocksRemaining = CalculateRemainingBlocks($blocks, $blockHalvingSubsidy);
@@ -25,6 +26,7 @@ if (empty($avgBlockTime)) {
 	$avgBlockTime = $blockTargetSpacing;
 }
 
+$okstakereward = 20;
 $blocksPerDay = (60 / $avgBlockTime) * 24;
 $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
 $blockString = '+' . (int)$blockHalvingEstimation . ' second';
@@ -138,13 +140,13 @@ function GetFileContents($filename) {
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
 			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=number_format($avgBlockTime, 2);?> minutes</td></tr>
 			<tr><td><b>Approximate blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
-			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($info['difficulty']);?></td></tr>
-			<tr><td><b>Hash rate:</b></td><td align = "right"><?=number_format($okcash->getnetworkhashps() / 1000 / 1000 / 1000 / 1000 / 1000 / 1000, 2) . ' Exahashes/s';?></td></tr>
+			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($difficulty);?></td></tr>
+			<tr><td><b>Actual Staking Percentage:</b></td><td align = "right"><?=number_format($okstakereward, 2) . ' % / Year';?></td></tr>
 		</table>
 		<div style="text-align:center">
 			<img src="../images/okcash.png" width="100px"; height="100px">
 			<br/>
-			<h2><a href="http://www.bitcoinblockhalf.com" target="_blank">Bitcoin Block Halving Countdown</a></h2>
+			<!-- <h2><a href="http://www.bitcoinblockhalf.com" target="_blank">Bitcoin Block Halving Countdown</a></h2> -->
 			<br/><br/>
 		</div>
 	</div>
