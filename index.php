@@ -147,8 +147,8 @@ function GetFileContents($filename) {
 			<tr><td><b>Okcash price (USD):</b></td><td align = "right">$<?=number_format($price, 4);?></td></tr>
 			<tr><td><b>Okcash price (MXN):</b></td><td align = "right">$<?=number_format($mxnprice, 4);?></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
-			<!-- <tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
-			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($inflationRateNextHalving * 100 / 1, 2);?>%</td></tr> -->
+			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>%</td></tr>
+			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($okstakereward / 2 / 1, 2);?>%</td></tr> 
 			<tr><td><b>Okcash inflation per day (USD):</b></td><td align = "right">$<?=number_format($blocksPerDay * $blockReward * $price);?></td></tr>
 			<tr><td><b>Okcash inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><a href="https://chainz.cryptoid.info/ok/" target="_blank"><?=number_format($blocks);?></a></td></tr>
@@ -160,8 +160,9 @@ function GetFileContents($filename) {
 		<div style="text-align:center">
 			<img src="../images/okcash.png" width="100px"; height="100px">
 			<br/>
-			<!-- <h2><a href="http://www.bitcoinblockhalf.com" target="_blank">Bitcoin Block Halving Countdown</a></h2> -->
-			<br/><br/>
+			<h2><a href="http://www.bitcoinblockhalf.com" target="_blank">Bitcoin Block Halving Countdown</a></h2>
+			<br/>
+			<br/>
 		</div>
 	</div>
 </body>
