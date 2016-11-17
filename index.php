@@ -26,6 +26,9 @@ $mprice = json_decode($mxndata, true);
 $ratemxprice = (float)$mprice["rates"]["MXN"];
 $rateeuprice = (float)$mprice["rates"]["EUR"];
 $ratecnprice = (float)$mprice["rates"]["CNY"];
+$rateruprice = (float)$mprice["rates"]["RUB"];
+$ratejpprice = (float)$mprice["rates"]["JPY"];
+$ratebrprice = (float)$mprice["rates"]["BRL"];
 
 
 $difficulty = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getdifficulty"), true);
@@ -53,6 +56,9 @@ $price = $okprice;
 $mxnprice = ($price * $ratemxprice);
 $eurprice = ($price * $rateeuprice);
 $cnyprice = ($price * $ratecnprice);
+$rubprice = ($price * $rateruprice);
+$jpyprice = ($price * $ratejpprice);
+$brlprice = ($price * $ratebrprice);
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -152,6 +158,9 @@ function GetFileContents($filename) {
 			<tr><td><b>Okcash price (USD):</b></td><td align = "right">$<?=number_format($price, 4);?></td></tr>
 			<tr><td><b>Okcash price (CNY):</b></td><td align = "right">$<?=number_format($cnyprice, 4);?></td></tr>
 			<tr><td><b>Okcash price (MXN):</b></td><td align = "right">$<?=number_format($mxnprice, 4);?></td></tr>
+			<tr><td><b>Okcash price (RUB):</b></td><td align = "right">$<?=number_format($rubprice, 4);?></td></tr>
+			<tr><td><b>Okcash price (JPY):</b></td><td align = "right">$<?=number_format($jpyprice, 4);?></td></tr>
+			<tr><td><b>Okcash price (BRL):</b></td><td align = "right">$<?=number_format($brlprice, 4);?></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
 			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>%</td></tr>
 			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($okstakereward / 2 / 1, 2);?>%</td></tr> 
