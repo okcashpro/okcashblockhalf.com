@@ -125,6 +125,24 @@ function GetFileContents($filename) {
 	<script src="js/flipclock.js"></script>	
 </head>
 <body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-87608748-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 	<div class="container">
 		<div class="page-header" style="text-align:center">
 			<h3>Okcash Block Reward Halving Countdown</h3>
@@ -145,6 +163,7 @@ function GetFileContents($filename) {
 			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 20% to 10% yearly over the staked coins. 
 			<br/><br/>
 		</div>
+		<div align="right"><div class="fb-like" data-href="https://www.facebook.com/OKCashCrypto/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div></div> <br/><br/>
 		<table class="table table-striped">
 		    <tr><td><b>Coin Market cap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><?=number_format($okrank)?></a></td></tr>
 			<tr><td><b>Actual Staking/Mining Percentage:</b></td><td align = "right"><?=number_format($okstakereward, 2) . ' % / Year';?></td></tr>
