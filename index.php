@@ -24,6 +24,8 @@ $okrank = (float)$okcprice["0"]["rank"];
 $mxndata = file_get_contents('http://api.fixer.io/latest?base=USD');
 $mprice = json_decode($mxndata, true);
 $ratemxprice = (float)$mprice["rates"]["MXN"];
+$rateeuprice = (float)$mprice["rates"]["EUR"];
+$ratecnprice = (float)$mprice["rates"]["CNY"];
 
 
 $difficulty = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getdifficulty"), true);
@@ -49,6 +51,8 @@ $inflationRateNextHalving = CalculateInflationRate(CalculateTotalCoins($blockSta
 $price = $okprice;
 
 $mxnprice = ($price * $ratemxprice);
+$eurprice = ($price * $rateeuprice);
+$cnyprice = ($price * $ratecnprice);
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -144,7 +148,9 @@ function GetFileContents($filename) {
 			<tr><td><b>Total OK coins left to mine:</b></td><td align = "right"><?=number_format($maxCoins - $coins)?></td></tr>
 			<tr><td><b>Total OK coins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
 			<tr><td><b>Approximate OK coins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>
+			<tr><td><b>Okcash price (EUR):</b></td><td align = "right">$<?=number_format($eurprice, 4);?></td></tr>
 			<tr><td><b>Okcash price (USD):</b></td><td align = "right">$<?=number_format($price, 4);?></td></tr>
+			<tr><td><b>Okcash price (CNY):</b></td><td align = "right">$<?=number_format($cnyprice, 4);?></td></tr>
 			<tr><td><b>Okcash price (MXN):</b></td><td align = "right">$<?=number_format($mxnprice, 4);?></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
 			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>%</td></tr>
@@ -161,8 +167,6 @@ function GetFileContents($filename) {
 			<img src="../images/okcash.png" width="100px"; height="100px">
 			<br/>
 			<h2><a href="http://www.bitcoinblockhalf.com" target="_blank">Bitcoin Block Halving Countdown</a></h2>
-			<br/>
-			<br/>
 		</div>
 	</div>
 </body>
