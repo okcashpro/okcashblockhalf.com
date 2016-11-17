@@ -11,10 +11,20 @@ try {
 }
 
 // Okcash settings
-$blockStartingReward = 14;
+$blockStartingReward = 18;
 $blockHalvingSubsidy = 1022514;
 $blockTargetSpacing = 1.12;
 $maxCoins = 105000000;
+
+$okcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/okcash/');
+$okcprice = json_decode($okcdata, true);
+$okprice = (float)$okcprice["0"]["price_usd"];
+$okrank = (float)$okcprice["0"]["rank"];
+
+$mxndata = file_get_contents('http://api.fixer.io/latest?base=USD');
+$mprice = json_decode($mxndata, true);
+$ratemxprice = (float)$mprice["rates"]["MXN"];
+
 
 $difficulty = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getdifficulty"), true);
 $blocks = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getblockcount"), true);
@@ -36,7 +46,9 @@ $nextHalvingHeight = $blocks + $blocksRemaining;
 $inflationRate = CalculateInflationRate($coins, $blockReward, $blocksPerDay);
 $inflationRateNextHalving = CalculateInflationRate(CalculateTotalCoins($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), 
 	CalculateRewardPerBlock($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), $blocksPerDay);
-$price = GetFileContents("price.txt");
+$price = $okprice;
+
+$mxnprice = ($price * $ratemxprice);
 
 function GetHalvings($blocks, $subsidy) {
 	return (int)($blocks / $subsidy);
@@ -124,16 +136,19 @@ function GetFileContents($filename) {
 			<br/><br/>
 		</div>
 		<table class="table table-striped">
+		    <tr><td><b>Coin Market cap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><?=number_format($okrank)?></a></td></tr>
+			<tr><td><b>Actual Staking/Mining Percentage:</b></td><td align = "right"><?=number_format($okstakereward, 2) . ' % / Year';?></td></tr>
 			<tr><td><b>Total OK coins in circulation:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
 			<tr><td><b>Total OK coins to ever be produced:</b></td><td align = "right"><?=number_format($maxCoins)?></td></tr>
 			<tr><td><b>Percentage of total OK coins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 4)?>%</td></tr>
 			<tr><td><b>Total OK coins left to mine:</b></td><td align = "right"><?=number_format($maxCoins - $coins)?></td></tr>
 			<tr><td><b>Total OK coins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
 			<tr><td><b>Okcash price (USD):</b></td><td align = "right">$<?=number_format($price, 4);?></td></tr>
+			<tr><td><b>Okcash price (MXN):</b></td><td align = "right">$<?=number_format($mxnprice, 4);?></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
-			<tr><td><b>OK coins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>	
-			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
-			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($inflationRateNextHalving * 100 / 1, 2);?>%</td></tr>
+			<tr><td><b>Approximate OK coins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>	
+			<!-- <tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($inflationRate * 100 / 1, 2);?>%</td></tr>
+			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($inflationRateNextHalving * 100 / 1, 2);?>%</td></tr> -->
 			<tr><td><b>Okcash inflation per day (USD):</b></td><td align = "right">$<?=number_format($blocksPerDay * $blockReward * $price);?></td></tr>
 			<tr><td><b>Okcash inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><?=number_format($blocks);?></td></tr>
@@ -141,7 +156,6 @@ function GetFileContents($filename) {
 			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=number_format($avgBlockTime, 2);?> minutes</td></tr>
 			<tr><td><b>Approximate blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
 			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($difficulty);?></td></tr>
-			<tr><td><b>Actual Staking Percentage:</b></td><td align = "right"><?=number_format($okstakereward, 2) . ' % / Year';?></td></tr>
 		</table>
 		<div style="text-align:center">
 			<img src="../images/okcash.png" width="100px"; height="100px">
