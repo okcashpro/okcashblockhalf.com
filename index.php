@@ -11,15 +11,20 @@ try {
 }
 
 // Okcash settings
-$blockStartingReward = 18;
-$blockHalvingSubsidy = 1022514;
+$blockStartingReward = 9;
+$blockHalvingSubsidy = 1523771;
 $blockTargetSpacing = 1.12;
 $maxCoins = 105000000;
+
+$btcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/bitcoin/');
+$btcusdprice = json_decode($btcdata, true);
+$btcprice = (float)$btcusdprice["0"]["price_usd"];
 
 $okcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/okcash/');
 $okcprice = json_decode($okcdata, true);
 $okprice = (float)$okcprice["0"]["price_usd"];
 $okrank = (float)$okcprice["0"]["rank"];
+$okbtcprice = (float)$okcprice["0"]["price_btc"];
 
 $mxndata = file_get_contents('http://api.fixer.io/latest?base=USD');
 $mprice = json_decode($mxndata, true);
@@ -41,7 +46,7 @@ if (empty($avgBlockTime)) {
 	$avgBlockTime = $blockTargetSpacing;
 }
 
-$okstakereward = 20;
+$okstakereward = 10;
 $blocksPerDay = (60 / $avgBlockTime) * 24;
 $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
 $blockString = '+' . (int)$blockHalvingEstimation . ' second';
@@ -117,8 +122,9 @@ function GetFileContents($filename) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Okcash Block Reward Halving Countdown website">
 	<meta name="author" content="">
+	<meta http-equiv="refresh" content="300">
 	<link rel="shortcut icon" href="favicon.png">
-	<title>Okcash Block Reward Halving Countdown</title>
+	<title>OK $ <?=number_format($price, 4);?> BTC $ <?=number_format($btcprice, 4);?> - Okcash Block Reward Halving Countdown</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/flipclock.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -160,7 +166,7 @@ function GetFileContents($filename) {
 		</script>
 		<div style="text-align:center">
 			Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
-			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 20% to 10% yearly over the staked coins. 
+			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 10% to 5% yearly over the staked coins. 
 			<br/><br/>
 		</div>
 		<div align="right"><div class="fb-like" data-href="https://www.facebook.com/OKCashCrypto/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div></div> <br/><br/>
@@ -173,13 +179,15 @@ function GetFileContents($filename) {
 			<tr><td><b>Total OK coins left to mine:</b></td><td align = "right"><?=number_format($maxCoins - $coins)?></td></tr>
 			<tr><td><b>Total OK coins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
 			<tr><td><b>Approximate OK coins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>
-			<tr><td><b>OK price (EUR):</b></td><td align = "right">$<?=number_format($eurprice, 4);?> <img src="../images/flag-european-union.png"></td></tr>
-			<tr><td><b>OK price (USD):</b></td><td align = "right">$<?=number_format($price, 4);?> <img src="../images/flag-usa.png"></td></tr>
-			<tr><td><b>OK price (CNY):</b></td><td align = "right">$<?=number_format($cnyprice, 4);?> <img src="../images/flag-china.png"></td></tr>
-			<tr><td><b>OK price (MXN):</b></td><td align = "right">$<?=number_format($mxnprice, 4);?> <img src="../images/flag-mexico.png"></td></tr>
-			<tr><td><b>OK price (RUB):</b></td><td align = "right">$<?=number_format($rubprice, 4);?> <img src="../images/flag-russia.png"></td></tr>
-			<tr><td><b>OK price (JPY):</b></td><td align = "right">$<?=number_format($jpyprice, 4);?> <img src="../images/flag-japan.png"></td></tr>
-			<tr><td><b>OK price (BRL):</b></td><td align = "right">$<?=number_format($brlprice, 4);?> <img src="../images/flag-brazil.png"></td></tr>
+			<tr><td><b>Bitcoin price (USD):</b></td><td align = "right">$ <?=number_format($btcprice, 4);?> <img src="../images/flag-usa.png"></td></tr>
+			<tr><td><b>OK price (BTC):</b></td><td align = "right">฿ <?=number_format($okbtcprice, 8);?> <img src="../images/bitcoin.png"></td></tr>
+			<tr><td><b>OK price (USD):</b></td><td align = "right">$ <?=number_format($price, 4);?> <img src="../images/flag-usa.png"></td></tr>
+			<tr><td><b>OK price (EUR):</b></td><td align = "right">€ <?=number_format($eurprice, 4);?> <img src="../images/flag-european-union.png"></td></tr>
+			<tr><td><b>OK price (CNY):</b></td><td align = "right">¥ <?=number_format($cnyprice, 4);?> <img src="../images/flag-china.png"></td></tr>
+			<tr><td><b>OK price (MXN):</b></td><td align = "right">$ <?=number_format($mxnprice, 4);?> <img src="../images/flag-mexico.png"></td></tr>
+			<tr><td><b>OK price (RUB):</b></td><td align = "right">&#x20bd; <?=number_format($rubprice, 4);?> <img src="../images/flag-russia.png"></td></tr>
+			<tr><td><b>OK price (JPY):</b></td><td align = "right">¥ <?=number_format($jpyprice, 4);?> <img src="../images/flag-japan.png"></td></tr>
+			<tr><td><b>OK price (BRL):</b></td><td align = "right">R$ <?=number_format($brlprice, 4);?> <img src="../images/flag-brazil.png"></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
 			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>%</td></tr>
 			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($okstakereward / 2 / 1, 2);?>%</td></tr> 
@@ -187,7 +195,7 @@ function GetFileContents($filename) {
 			<tr><td><b>Okcash inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><a href="https://chainz.cryptoid.info/ok/" target="_blank"><?=number_format($blocks);?></a></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
-			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=number_format($avgBlockTime, 2);?> minutes</td></tr>
+			<tr><td><b>Approximate block generation time:</b></td><td align = "right">72 seconds</td></tr>
 			<tr><td><b>Approximate blocks generated per day:</b></td><td align = "right"><?=$blocksPerDay;?></td></tr>
 			<tr><td><b>Difficulty:</b></td><td align = "right"><?=number_format($difficulty);?></td></tr>
 		</table>
