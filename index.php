@@ -11,8 +11,8 @@ try {
 }
 
 // Okcash settings
-$blockStartingReward = 9;
-$blockHalvingSubsidy = 1523771;
+$blockStartingReward = 4.5;
+$blockHalvingSubsidy = 2025028;
 $blockTargetSpacing = 1.12;
 $maxCoins = 105000000;
 
@@ -46,7 +46,7 @@ if (empty($avgBlockTime)) {
 	$avgBlockTime = $blockTargetSpacing;
 }
 
-$okstakereward = 10;
+$okstakereward = 5;
 $blocksPerDay = (60 / $avgBlockTime) * 24;
 $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
 $blockString = '+' . (int)$blockHalvingEstimation . ' second';
@@ -166,7 +166,7 @@ function GetFileContents($filename) {
 		</script>
 		<div style="text-align:center">
 			Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
-			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 10% to 5% yearly over the staked coins. 
+			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 5% to 2.5% yearly over the staked coins. 
 			<br/><br/>
 		</div>
 		<div align="right"><div class="fb-like" data-href="https://www.facebook.com/OKCashCrypto/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div></div> <br/><br/>
@@ -182,12 +182,6 @@ function GetFileContents($filename) {
 			<tr><td><b>Bitcoin price (USD):</b></td><td align = "right">$ <?=number_format($btcprice, 4);?> <img src="../images/flag-usa.png"></td></tr>
 			<tr><td><b>OK price (BTC):</b></td><td align = "right">฿ <?=number_format($okbtcprice, 8);?> <img src="../images/bitcoin.png"></td></tr>
 			<tr><td><b>OK price (USD):</b></td><td align = "right">$ <?=number_format($price, 4);?> <img src="../images/flag-usa.png"></td></tr>
-			<tr><td><b>OK price (EUR):</b></td><td align = "right">€ <?=number_format($eurprice, 4);?> <img src="../images/flag-european-union.png"></td></tr>
-			<tr><td><b>OK price (CNY):</b></td><td align = "right">¥ <?=number_format($cnyprice, 4);?> <img src="../images/flag-china.png"></td></tr>
-			<tr><td><b>OK price (MXN):</b></td><td align = "right">$ <?=number_format($mxnprice, 4);?> <img src="../images/flag-mexico.png"></td></tr>
-			<tr><td><b>OK price (RUB):</b></td><td align = "right">&#x20bd; <?=number_format($rubprice, 4);?> <img src="../images/flag-russia.png"></td></tr>
-			<tr><td><b>OK price (JPY):</b></td><td align = "right">¥ <?=number_format($jpyprice, 4);?> <img src="../images/flag-japan.png"></td></tr>
-			<tr><td><b>OK price (BRL):</b></td><td align = "right">R$ <?=number_format($brlprice, 4);?> <img src="../images/flag-brazil.png"></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
 			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>%</td></tr>
 			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right"><?=number_format($okstakereward / 2 / 1, 2);?>%</td></tr> 
