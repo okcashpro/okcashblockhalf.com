@@ -125,7 +125,7 @@ function GetFileContents($filename) {
 	<meta http-equiv="refresh" content="300">
 	<link rel="shortcut icon" href="favicon.png">
 	<title>OK $ <?=number_format($price, 4);?> BTC $ <?=number_format($btcprice, 4);?> - Okcash Block Reward Halving Countdown</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrapb.min.css">
 	<link rel="stylesheet" href="css/flipclock.css">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -170,7 +170,7 @@ function GetFileContents($filename) {
 			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 5% to 2.5% yearly over the staked coins. 
 			<br/>
 		</div>
-		<div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/>
+		<div align="right"><a href="index.php" target="_self"><span class="gb">LIGHT THEME</span></a></div> <br/>
 		<div align="right"><div class="fb-like" data-href="https://www.facebook.com/OKCashCrypto/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div></div> <br/><br/>
 		<table class="table table-striped">
 		    <tr><td><b>Coin Market cap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><span class="gg"><?=number_format($okrank)?></span></a></td></tr>
