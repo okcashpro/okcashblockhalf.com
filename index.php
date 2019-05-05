@@ -12,7 +12,7 @@ try {
 
 // Okcash settings
 $blockStartingReward = 4.5;
-$blockHalvingSubsidy = 2025028;
+$blockHalvingSubsidy = 2526285;
 $blockTargetSpacing = 1.12;
 $maxCoins = 105000000;
 
@@ -46,7 +46,7 @@ if (empty($avgBlockTime)) {
 	$avgBlockTime = $blockTargetSpacing;
 }
 
-$okstakereward = 5;
+$okstakereward = 2.5;
 $blocksPerDay = (60 / $avgBlockTime) * 24;
 $blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
 $blockString = '+' . (int)$blockHalvingEstimation . ' second';
@@ -167,11 +167,11 @@ function GetFileContents($filename) {
 		</script>
 		<div style="text-align:center">
 			Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
-			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 5% to 2.5% yearly over the staked coins. 
+			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 2.5% to 1.5% yearly over the staked coins. 
 			<br/>
 		</div>
-		<div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/>
-		<div align="right"><div class="fb-like" data-href="https://www.facebook.com/OKCashCrypto/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div></div> <br/><br/>
+		<!-- <div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/> 
+		<div align="right"><div class="fb-like" data-href="https://www.facebook.com/OKCashCrypto/" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div></div> --> <br/><br/>
 		<table class="table table-striped">
 		    <tr><td><b>Coin Market cap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><span class="gg"><?=number_format($okrank)?></span></a></td></tr>
 			<tr><td><b>Actual Staking/Mining Percentage:</b></td><td align = "right"><?=number_format($okstakereward, 2) . ' % / Year';?></td></tr>
