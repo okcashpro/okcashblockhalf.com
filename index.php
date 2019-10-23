@@ -1,116 +1,55 @@
 <?php
-require_once 'easyokcash.php';
 
-$okcash = new Okcash('TestNumberOne01','PasswordTest0101','localhost','6969');
+// Okcashblockhalf settings
 
-try {
-	$info = $okcash->getinfo();
-} catch (Exception $e) {
-	echo nl2br($e->getMessage()).'<br />'."\n"; 
-	die();
-}
+$blockStartingReward = file_get_contents("txt/blockStartingReward.txt");
 
-// Okcash settings
-$blockStartingReward = 4.5;
-$blockHalvingSubsidy = 2526285;
-$blockTargetSpacing = 1.12;
-$maxCoins = 105000000;
+$blockHalvingSubsidy = file_get_contents("txt/blockHalvingSubsidy.txt");
 
-$btcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/bitcoin/');
-$btcusdprice = json_decode($btcdata, true);
-$btcprice = (float)$btcusdprice["0"]["price_usd"];
+$blockTargetSpacing = file_get_contents("txt/blockTargetSpacing.txt");
 
-$okcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/okcash/');
-$okcprice = json_decode($okcdata, true);
-$okprice = (float)$okcprice["0"]["price_usd"];
-$okrank = (float)$okcprice["0"]["rank"];
-$okbtcprice = (float)$okcprice["0"]["price_btc"];
+$maxCoins = file_get_contents("txt/maxCoins.txt");
 
-$mxndata = file_get_contents('http://api.fixer.io/latest?base=USD');
-$mprice = json_decode($mxndata, true);
-$ratemxprice = (float)$mprice["rates"]["MXN"];
-$rateeuprice = (float)$mprice["rates"]["EUR"];
-$ratecnprice = (float)$mprice["rates"]["CNY"];
-$rateruprice = (float)$mprice["rates"]["RUB"];
-$ratejpprice = (float)$mprice["rates"]["JPY"];
-$ratebrprice = (float)$mprice["rates"]["BRL"];
+$okstakereward = file_get_contents("txt/okstakereward.txt");
 
 
-$difficulty = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getdifficulty"), true);
-$blocks = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getblockcount"), true);
-$coins = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=circulating"), true);
-$blocksRemaining = CalculateRemainingBlocks($blocks, $blockHalvingSubsidy);
+// Okcashblockhalf data
 
-$avgBlockTime = GetFileContents("timebetweenblocks.txt");
-if (empty($avgBlockTime)) {
-	$avgBlockTime = $blockTargetSpacing;
-}
+$btcprice = file_get_contents("txt/btcprice.txt");
 
-$okstakereward = 2.5;
-$blocksPerDay = (60 / $avgBlockTime) * 24;
-$blockHalvingEstimation = $blocksRemaining / $blocksPerDay * 24 * 60 * 60;
-$blockString = '+' . (int)$blockHalvingEstimation . ' second';
-$blockReward = CalculateRewardPerBlock($blockStartingReward, $blocks, $blockHalvingSubsidy);
-$coinsRemaining = $blocksRemaining * $blockReward;
-$nextHalvingHeight = $blocks + $blocksRemaining;
-$inflationRate = CalculateInflationRate($coins, $blockReward, $blocksPerDay);
-$inflationRateNextHalving = CalculateInflationRate(CalculateTotalCoins($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), 
-	CalculateRewardPerBlock($blockStartingReward, $nextHalvingHeight, $blockHalvingSubsidy), $blocksPerDay);
-$price = $okprice;
+$okprice = file_get_contents("txt/okprice.txt");
 
-$mxnprice = ($price * $ratemxprice);
-$eurprice = ($price * $rateeuprice);
-$cnyprice = ($price * $ratecnprice);
-$rubprice = ($price * $rateruprice);
-$jpyprice = ($price * $ratejpprice);
-$brlprice = ($price * $ratebrprice);
+$okrank = file_get_contents("txt/okrank.txt");
 
-function GetHalvings($blocks, $subsidy) {
-	return (int)($blocks / $subsidy);
-}
+$okbtcprice = file_get_contents("txt/okbtcprice.txt");
 
-function CalculateRemainingBlocks($blocks, $subsidy) {
-	$halvings = GetHalvings($blocks, $subsidy);
-	if ($halvings == 0) {
-		return $subsidy - $blocks;
-	} else {
-		$halvings += 1;
-		return $halvings * $subsidy - $blocks;
-	}
-}
+$difficulty = file_get_contents("txt/difficulty.txt");
 
-function CalculateRewardPerBlock($blockReward, $blocks, $subsidy) {
-	$halvings = GetHalvings($blocks, $subsidy);
-	$blockReward >>= $halvings;
-	return $blockReward;
-}
+$blocks = file_get_contents("txt/blocks.txt");
 
-function CalculateTotalCoins($blockReward, $blocks, $subsidy) {
-	$halvings = GetHalvings($blocks, $subsidy);
-	if ($halvings == 0) {
-		return $blocks * $blockReward;
-	} else {
-		$coins = 0;
-		for ($i = 0; $i < $halvings; $i++) {
-			$coins += $blockReward * $subsidy;
-			$blocks -= $subsidy;
-			$blockReward = $blockReward / 2; 
-		}
-		$coins += $blockReward * $blocks;
-		return $coins;
-	}
-}
+$coins = file_get_contents("txt/coins.txt");
 
-function CalculateInflationRate($totalCoins, $blockReward, $blocksPerDay) {
-	return pow((($totalCoins + $blockReward) / $totalCoins ), (365 * $blocksPerDay)) - 1;
-}
+$blocksRemaining = file_get_contents("txt/blocksRemaining.txt");
 
-function GetFileContents($filename) {
-	$file = fopen($filename, "r") or die("Unable to open file!");
-	$result = fread($file,filesize($filename));
-	fclose($file);
-	return $result;
-}
+$avgBlockTime = file_get_contents("txt/avgBlockTime.txt");
+
+$blocksPerDay = file_get_contents("txt/blocksPerDay.txt");
+
+$blockHalvingEstimation = file_get_contents("txt/blockHalvingEstimation.txt");
+
+$blockString = file_get_contents("txt/blockString.txt");
+
+$blockReward = file_get_contents("txt/blockReward.txt");
+
+$coinsRemaining = file_get_contents("txt/coinsRemaining.txt");
+
+$nextHalvingHeight = file_get_contents("txt/nextHalvingHeight.txt");
+
+$inflationRate = file_get_contents("txt/inflationRate.txt");
+
+$inflationRateNextHalving = file_get_contents("txt/inflationRateNextHalving.txt");
+
+$price = file_get_contents("txt/price.txt");
 
 ?>
 
@@ -122,7 +61,7 @@ function GetFileContents($filename) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Okcash Block Reward Halving Countdown website">
 	<meta name="author" content="">
-	<meta http-equiv="refresh" content="300">
+	<meta http-equiv="refresh" content="60">
 	<link rel="shortcut icon" href="favicon.png">
 	<title>OK $ <?=number_format($price, 4);?> BTC $ <?=number_format($btcprice, 4);?> - Okcash Block Reward Halving Countdown</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
