@@ -106,7 +106,7 @@ $price = file_get_contents("txt/price.txt");
 		</script>
 		<div style="text-align:center">
 			Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
-			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 2.5% to 2% yearly over the staked coins. 
+			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will decrease from 2.5% to 22% yearly over the staked coins. 
 			<br/>
 		</div>
 		<!-- <div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/> 
