@@ -59,11 +59,11 @@ $price = file_get_contents("txt/price.txt");
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Okcash Block Reward Halving Countdown website">
+	<meta name="description" content="Okcash Block Reward Countdown website">
 	<meta name="author" content="">
 	<meta http-equiv="refresh" content="60">
 	<link rel="shortcut icon" href="favicon.png">
-	<title>OK $ <?=number_format($price, 4);?> BTC $ <?=number_format($btcprice, 4);?> - Okcash Block Reward Halving Countdown</title>
+	<title>OK $ <?=number_format($price, 4);?> BTC $ <?=number_format($btcprice, 4);?> - Okcash Block Reward Countdown</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/flipclock.css">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -91,7 +91,7 @@ $price = file_get_contents("txt/price.txt");
 }(document, 'script', 'facebook-jssdk'));</script>
 	<div class="container">
 		<div class="page-header" style="text-align:center">
-			<h3>Okcash Block Reward Halving Countdown</h3>
+			<h3>Okcash Block Reward Countdown</h3>
 		</div>
 		<div class="flip-counter clock" style="display: flex; align-items: center; justify-content: center;"></div>
 		<script type="text/javascript">
@@ -106,7 +106,7 @@ $price = file_get_contents("txt/price.txt");
 		</script>
 		<div style="text-align:center">
 			Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/><br/>
-			<p>The Next Okcash block staking/mining reward halves on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will change from 2.5% to 22% yearly over the staked coins. 
+			<p>The Next Okcash block staking/mining reward changes on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will change from 2.5% to 22% yearly over the staked coins. 
 			<br/>
 		</div>
 		<!-- <div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/> 
@@ -125,7 +125,7 @@ $price = file_get_contents("txt/price.txt");
 			<tr><td><b>OK price (USD):</b></td><td align = "right">$ <?=number_format($price, 4);?> <img src="../images/flag-usa.png"></td></tr>
 			<tr><td><b>Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
 			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>%</td></tr>
-			<tr><td><b>Okcash inflation rate per annum at next block halving event:</b></td><td align = "right">22%</td></tr> 
+			<tr><td><b>Okcash inflation rate per annum at next block change event:</b></td><td align = "right">22%</td></tr> 
 			<tr><td><b>Okcash inflation per day (USD):</b></td><td align = "right">$<?=number_format($blocksPerDay * $blockReward * $price);?></td></tr>
 			<tr><td><b>Okcash inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format($coinsRemaining * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><a href="https://chainz.cryptoid.info/ok/" target="_blank"><span class="gg"><?=number_format($blocks);?></a></span></td></tr>
