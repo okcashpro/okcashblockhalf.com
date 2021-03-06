@@ -102,8 +102,8 @@ $brlprice = file_get_contents("txt/brlprice.txt");
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 	<div class="container">
-		<div class="page-header" style="text-align:center">
-			<h3>Okcash Block Reward Countdown</h3>
+		<div class="page-header" style="text-align:center;margin-top:-5px">
+			<h1>Okcash Block Reward Halving Countdown</h1>
 		</div>
         <div class="flip-counter clock" style="display: flex; align-items: center; justify-content: center;"></div>
 		<script type="text/javascript">
@@ -116,12 +116,37 @@ $brlprice = file_get_contents("txt/brlprice.txt");
 				});
 			});
 		</script>
-
-		<div style="text-align:center">
-            Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?></strong><br/>
-			<p>The Next Okcash block staking/mining reward changes on block number <?=number_format($blockHalvingSubsidy)?>.<br/> The yearly coin percentage reward will change from 22 % / (1/3) to 11 % / (1/3) yearly over the staked coins. 
+		<div style="text-align:center;margin-top:-10px">
+            Reward-Drop ETA date: <strong><?=date('d M Y H:i:s', strtotime($blockString, time()))?> UTC</strong><br/>
 		</div>
-		<!-- <div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/>  --> <br/>
+        <h2>What is a block halving event?</h2>
+		<p> As part of Okcash's coin issuance, miners/stakers are rewarded a certain amount of Okcash coins whenever a block is produced (approximately every 69 seconds).<br/>
+		When Okcash first started, 2000 OK coins per block were given as a reward to PoW miners. After the block number 33,186 PoW evolved to LTSS PoS and halvings have been ocurring at different time schedules taking in consideration 501,257 blocks per year, the block reward halves and will keep on halving until the block 27,589,135 (approximately by year 2070). <br/>
+		As of now, the block reward is under the LTSS PoSv2 system at a rate of <b>22%</b> per year [Variable block reward + variable network growth by net staking percentage] and will decrease and evolve to LTSS PoSv3hybrid after next halving with reward of <b>5.8</b> OK coins per block [Semi-static block reward + predictable network growth no matter net staking percentage, achieving Bitcoin predictability under Okcash unique LTSS PoS System.(Energy Friendly)]</p>
+
+		<h2> Why was this done?</h2>
+		<p> Okcash was designed as a deflationary currency. Like gold and Bitcoin, the premise is that over time, the issuance of OK coins will decrease and thus become scarcer over time. As Okcash become scarcer and if demand for them increases over time, Okcash can be used as a hedge against inflation as the price, guided by price equilibrium is bound to increase. On the flip side, fiat currencies (like the US dollar), inflate over time as its monetary supply increases, leading to a decrease in purchasing power. This is known as monetary debasement by inflation. A simple example would be to compare housing prices decades ago to now and you'll notice that they've increased over time!</p>
+
+		<h2> Predictable monetary supply</h2>
+		<p> Since we know Okcash's issuance over time, people can rely on programmed/controlled supply. This is helpful to understand what the current inflation rate of Okcash is, what the future inflation rate will be at a specific point in time, how many OK coins are in circulation and how many remain left to be mined/staked. </p>
+		<a href="https://chainz.cryptoid.info/ok/#@inflation" target="_blank"><img src="../images/okcash-inflation-chart.png" alt="okcash inflation chart" style="display: block; margin-left: auto; margin-right: auto; width:75%"></img></a>
+
+		<h2> Who controls the issuance of Okcash (OK coins)?</h2>
+		<p> The network itself controls the issuance of OK coins, derived by consensus through all Okcash participants. Ever since Okcash was first designed, the following consensus rules exist to this day:
+		<ul>
+			<li> 105,000,000 OK coins to ever be produced</li>
+			<li> Target of 69-second block intervals</li>
+			<li> Halving event schedule based on 501,257 block/year. (approximately every 1,2,10 years)</li>
+			<li> Block reward diminish continually every halving event until block 27,589,135 (approximately by year 2070)</li>
+			<li> Last OK coins are expected to be mined/staked approximately by year 2148)</li>
+		</ul>
+		Any change to these parameters requires all Okcash participants to agree by consensus to approve the change.</p>
+
+        <h2> How to buy Okcash? </h2>
+		<p> The community keeps an updated list of exchanges over <a href="https://okcash.co/#exchanges" target"_blank">okcash.co</a> where you can check the best option for you. 
+		</p>
+		<h2 id="stats">Stats </h2>
+		<!-- <div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/> <br/> --> 
 		<table class="table table-striped">
 		    <tr><td><b>CoinCap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><span class="gg"><?=number_format($okrank)?></span></a></td></tr>
 			<tr><td><b>Ongoing Staking/Mining Percentage:</b></td><td align = "right">22 % / (1/3) Net Staking = Expected Net Growth Staking <?=number_format(($okstakereward / 3), 2) . ' % Year';?></td></tr>
