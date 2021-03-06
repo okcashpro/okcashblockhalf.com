@@ -3,19 +3,19 @@
 // Okcashblockhalf settings
 // OK constants
 
-$blockStartingReward = 4.5;
+$blockStartingReward = 15.8989;
 
 $fp = fopen('txt/blockStartingReward.txt', 'w') or die("can't open file");
 fwrite($fp, $blockStartingReward);
 fclose($fp);
 
-$blockHalvingSubsidy = 2526285;
+$blockHalvingSubsidy = 3027542;
 
 $fp = fopen('txt/blockHalvingSubsidy.txt', 'w') or die("can't open file");
 fwrite($fp, $blockHalvingSubsidy);
 fclose($fp);
 
-$blockTargetSpacing = 1.12;
+$blockTargetSpacing = 72.7;
 
 $fp = fopen('txt/blockTargetSpacing.txt', 'w') or die("can't open file");
 fwrite($fp, $blockTargetSpacing);
@@ -27,40 +27,92 @@ $fp = fopen('txt/maxCoins.txt', 'w') or die("can't open file");
 fwrite($fp, $maxCoins);
 fclose($fp);
 
-$okstakereward = 2.5;
+$okstakereward = 22;
 
 $fp = fopen('txt/okstakereward.txt', 'w') or die("can't open file");
 fwrite($fp, $okstakereward);
 fclose($fp);
 
 
-// Okcashblockhalf data
+// coincap -co data
 
-$btcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/bitcoin/');
-$btcusdprice = json_decode($btcdata, true);
-$btcprice = (float)$btcusdprice["0"]["price_usd"];
+$urlok2 = "http://chainz.cryptoid.info/ok/api.dws?q=addresses";
+$json2 = json_decode(file_get_contents($urlok2), true);
+$totady = $json2["known"];
+$nonady = $json2["nonzero"];
+
+$urlok22 = "http://chainz.cryptoid.info/ok/api.dws?q=ticker.btc";
+$okbtcprice = json_decode(file_get_contents($urlok22), true);
+
+$urlok221 = "http://chainz.cryptoid.info/ok/api.dws?q=ticker.usd";
+$okprice = json_decode(file_get_contents($urlok221), true);
+
+$urlok222 = "https://btc.cryptoid.info/btc/api.dws?q=ticker.usd";
+$btcprice = json_decode(file_get_contents($urlok222), true);
+
+$fp = fopen('txt/totady.txt', 'w') or die("can't open file");
+fwrite($fp, $totady);
+fclose($fp);
+
+$fp = fopen('txt/nonady.txt', 'w') or die("can't open file");
+fwrite($fp, $nonady);
+fclose($fp);
 
 $fp = fopen('txt/btcprice.txt', 'w') or die("can't open file");
 fwrite($fp, $btcprice);
 fclose($fp);
 
-$okcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/okcash/');
-$okcprice = json_decode($okcdata, true);
-$okprice = (float)$okcprice["0"]["price_usd"];
-$okrank = (float)$okcprice["0"]["rank"];
-$okbtcprice = (float)$okcprice["0"]["price_btc"];
-
 $fp = fopen('txt/okprice.txt', 'w') or die("can't open file");
 fwrite($fp, $okprice);
-fclose($fp);
-
-$fp = fopen('txt/okrank.txt', 'w') or die("can't open file");
-fwrite($fp, $okrank);
 fclose($fp);
 
 $fp = fopen('txt/okbtcprice.txt', 'w') or die("can't open file");
 fwrite($fp, $okbtcprice);
 fclose($fp);
+
+$urlok4 = "https://api.coincap.io/v2/assets/okcash";
+$json4 = json_decode(file_get_contents($urlok4), true);
+$okrank = $json4["data"]["rank"];
+$marketcap = $json4["data"]["marketCapUsd"];
+// $okprice = $json4["data"]["priceUsd"];
+
+$fp = fopen('txt/okrank.txt', 'w') or die("can't open file");
+fwrite($fp, $okrank);
+fclose($fp);
+
+
+
+//$fp = fopen('stats/marketcap.txt', 'w') or die("can't open file");
+//fwrite($fp, $marketcap);
+//fclose($fp);
+
+// Okcashblockhalf data 
+
+// $btcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/bitcoin/');
+// $btcusdprice = json_decode($btcdata, true);
+// $btcprice = (float)$btcusdprice["0"]["price_usd"];
+
+// $fp = fopen('txt/btcprice.txt', 'w') or die("can't open file");
+// fwrite($fp, $btcprice);
+// fclose($fp);
+
+// $okcdata = file_get_contents('https://api.coinmarketcap.com/v1/ticker/okcash/');
+// $okcprice = json_decode($okcdata, true);
+// $okprice = (float)$okcprice["0"]["price_usd"];
+// $okrank = (float)$okcprice["0"]["rank"];
+// $okbtcprice = (float)$okcprice["0"]["price_btc"];
+
+// $fp = fopen('txt/okprice.txt', 'w') or die("can't open file");
+// fwrite($fp, $okprice);
+// fclose($fp);
+
+// $fp = fopen('txt/okrank.txt', 'w') or die("can't open file");
+// fwrite($fp, $okrank);
+// fclose($fp);
+
+// $fp = fopen('txt/okbtcprice.txt', 'w') or die("can't open file");
+// fwrite($fp, $okbtcprice);
+// fclose($fp);
 
 $difficulty = json_decode(file_get_contents("http://chainz.cryptoid.info/ok/api.dws?q=getdifficulty"), true);
 
@@ -95,7 +147,7 @@ fclose($fp);
 
 
 
-$blocksPerDay = (60 / $avgBlockTime) * 24;
+$blocksPerDay = (86400 / $avgBlockTime);
 
 $fp = fopen('txt/blocksPerDay.txt', 'w') or die("can't open file");
 fwrite($fp, $blocksPerDay);
@@ -151,53 +203,53 @@ fwrite($fp, $price);
 fclose($fp);
 
 
-// Currency convertions - Not getting used
+// Currency convertions
 
-// $mxndata = file_get_contents('http://api.fixer.io/latest?base=USD');
-// $mprice = json_decode($mxndata, true);
-// $ratemxprice = (float)$mprice["rates"]["MXN"];
-// $rateeuprice = (float)$mprice["rates"]["EUR"];
-// $ratecnprice = (float)$mprice["rates"]["CNY"];
-// $rateruprice = (float)$mprice["rates"]["RUB"];
-// $ratejpprice = (float)$mprice["rates"]["JPY"];
-// $ratebrprice = (float)$mprice["rates"]["BRL"];
+$mxndata = file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=okcash&vs_currencies=eur%2Ccny%2Cmxn%2Crub%2Cjpy%2Cbrl');
+$mprice = json_decode($mxndata, true);
+$mxnprice = (float)$mprice["okcash"]["mxn"];
+$eurprice = (float)$mprice["okcash"]["eur"];
+$cnyprice = (float)$mprice["okcash"]["cny"];
+$rubprice = (float)$mprice["okcash"]["rub"];
+$jpyprice = (float)$mprice["okcash"]["jpy"];
+$brlprice = (float)$mprice["okcash"]["brl"];
 
 
 // $mxnprice = ($price * $ratemxprice);
 
-// $fp = fopen('txt/mxnprice.txt', 'w') or die("can't open file");
-// fwrite($fp, $mxnprice);
-// fclose($fp);
+$fp = fopen('txt/mxnprice.txt', 'w') or die("can't open file");
+fwrite($fp, $mxnprice);
+fclose($fp);
 
 // $eurprice = ($price * $rateeuprice);
 
-// $fp = fopen('txt/eurprice.txt', 'w') or die("can't open file");
-// fwrite($fp, $eurprice);
-// fclose($fp);
+$fp = fopen('txt/eurprice.txt', 'w') or die("can't open file");
+fwrite($fp, $eurprice);
+fclose($fp);
 
 // $cnyprice = ($price * $ratecnprice);
 
-// $fp = fopen('txt/cnyprice.txt', 'w') or die("can't open file");
-// fwrite($fp, $cnyprice);
-// fclose($fp);
+$fp = fopen('txt/cnyprice.txt', 'w') or die("can't open file");
+fwrite($fp, $cnyprice);
+fclose($fp);
 
 // $rubprice = ($price * $rateruprice);
 
-// $fp = fopen('txt/rubprice.txt', 'w') or die("can't open file");
-// fwrite($fp, $rubprice);
-// fclose($fp);
+$fp = fopen('txt/rubprice.txt', 'w') or die("can't open file");
+fwrite($fp, $rubprice);
+fclose($fp);
 
 // $jpyprice = ($price * $ratejpprice);
 
-// $fp = fopen('txt/jpyprice.txt', 'w') or die("can't open file");
-// fwrite($fp, $jpyprice);
-// fclose($fp);
+$fp = fopen('txt/jpyprice.txt', 'w') or die("can't open file");
+fwrite($fp, $jpyprice);
+fclose($fp);
 
 // $brlprice = ($price * $ratebrprice);
 
-// $fp = fopen('txt/brlprice.txt', 'w') or die("can't open file");
-// fwrite($fp, $brlprice);
-// fclose($fp);
+$fp = fopen('txt/brlprice.txt', 'w') or die("can't open file");
+fwrite($fp, $brlprice);
+fclose($fp);
 
 
 // Functions
