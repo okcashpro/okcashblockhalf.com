@@ -19,7 +19,7 @@ $btcprice = file_get_contents("txt/btcprice.txt");
 
 $okprice = file_get_contents("txt/okprice.txt");
 
-$okrank = file_get_contents("txt/okrank.txt");
+$okokrank = file_get_contents("txt/okrank.txt");
 
 $okbtcprice = file_get_contents("txt/okbtcprice.txt");
 
@@ -121,8 +121,8 @@ $brlprice = file_get_contents("txt/brlprice.txt");
 		</div>
         <h2>What is a block halving event?</h2>
 		<p> As part of Okcash's coin issuance, miners/stakers are rewarded a certain amount of Okcash coins whenever a block is produced (approximately every 69 seconds).<br/>
-		When Okcash first started, 2000 OK coins per block were given as a reward to PoW miners. After the block number 33,186 PoW evolved to LTSS PoS and halvings have been ocurring at different time schedules taking in consideration 501,257 blocks per year, the block reward halves and will keep on halving until the block 27,589,135 (approximately by year 2070). <br/>
-		As of now, the block reward is under the LTSS PoSv2 system at a rate of <b>22%</b> per year [Variable block reward + variable network growth by net staking percentage] and will decrease and evolve to LTSS PoSv3hybrid after next halving with reward of <b>6</b> OK coins per block [Semi-static block reward + predictable network growth no matter net staking percentage, achieving Bitcoin predictability under Okcash unique LTSS PoS System.(Energy Friendly)]</p>
+		When Okcash first started, 2000 OK coins per block were given as a reward to PoW miners. After the block number 33,186 PoW evolved to LTSS PoS and halvings have been ocurring at different time schedules taking in consideration 501,257 blocks per year, the block reward halves and will keep on halving until the block 27,589,135 (last halving approximately by year 2070). <br/>
+		As of now, the block reward evolved [Semi-static block reward + predictable network growth no matter net staking percentage, achieving Bitcoin predictability under Okcash unique LTSS PoS System.(Energy Friendly)] and is now under the LTSS PoSv3hybrid system at a rate of <b>6</b> coins per block and will decrease to <b>3.9</b> coins per block post halving.</p>
 
 		<h2> Why was this done?</h2>
 		<p> Okcash was designed as a deflationary currency. Like gold and Bitcoin, the premise is that over time, the issuance of OK coins will decrease and thus become scarcer over time. As Okcash become scarcer and if demand for them increases over time, Okcash can be used as a hedge against inflation as the price, guided by price equilibrium is bound to increase. On the flip side, fiat currencies (like the US dollar), inflate over time as its monetary supply increases, leading to a decrease in purchasing power. This is known as monetary debasement by inflation. A simple example would be to compare housing prices decades ago to now and you'll notice that they've increased over time!</p>
@@ -148,13 +148,13 @@ $brlprice = file_get_contents("txt/brlprice.txt");
 		<h2 id="stats">Stats </h2>
 		<!-- <div align="right"><a href="bhalf.php" target="_self"><span class="gb">DARK THEME</span></a></div> <br/> <br/> --> 
 		<table class="table table-striped">
-		    <tr><td><b>CoinCap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><span class="gg"><?=number_format($okrank)?></span></a></td></tr>
-			<tr><td><b>Ongoing Staking/Mining Percentage:</b></td><td align = "right">22 % / (1/3) Net Staking = Expected Net Growth Staking <?=number_format(($okstakereward / 3), 2) . ' % Year';?></td></tr>
+		    <tr><td><b>CoinCap (worldwide rank):</b></td><td align = "right"><a href="http://coinmarketcap.com/currencies/okcash/" target="_blank"><span class="gg"><?=number_format($okokrank)?></span></a></td></tr>
+			<tr><td><b>Ongoing Staking/Mining:</b></td><td align = "right"><b>6+</b> OK coins / Block Reward</td></tr>
 			<tr><td><b>Total OK coins in circulation:</b></td><td align = "right"><?=number_format($coins)?></td></tr>
 			<tr><td><b>Total OK coins to ever be produced:</b></td><td align = "right"><?=number_format($maxCoins)?></td></tr>
 			<tr><td><b>Percentage of total OK coins mined:</b></td><td align = "right"><?=number_format($coins / $maxCoins * 100 / 1, 4)?>%</td></tr>
 			<tr><td><b>Total OK coins left to mine:</b></td><td align = "right"><?=number_format($maxCoins - $coins)?></td></tr>
-			<tr><td><b>Approximate OK coins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining / 3);?></td></tr>
+			<tr><td><b>Approximate OK coins left to mine until next blockhalf:</b></td><td align = "right"><?= number_format($coinsRemaining);?></td></tr>
 			<tr><td><b>Approximate OK coins generated per day:</b></td><td align = "right"><?=number_format($blocksPerDay * $blockReward);?></td></tr>
 			<tr><td><b>Bitcoin price (USD):</b></td><td align = "right">$ <?=number_format($btcprice, 4);?> <img src="../images/flag-usa.png"></td></tr>
 			<tr><td><b>OK price (BTC):</b></td><td align = "right">฿ <?=number_format($okbtcprice, 8);?> <img src="../images/bitcoin.png"></td></tr>
@@ -166,10 +166,10 @@ $brlprice = file_get_contents("txt/brlprice.txt");
 			<tr><td><b>OK price (JPY):</b></td><td align = "right">¥ <?=number_format($jpyprice, 4);?> <img src="../images/flag-japan.png"></td></tr>
 			<tr><td><b>OK price (BRL):</b></td><td align = "right">R$ <?=number_format($brlprice, 4);?> <img src="../images/flag-brazil.png"></td></tr>
 			<tr><td><b>OK Market capitalization (USD):</b></td><td align = "right">$<?=number_format($coins * $price, 2);?></td></tr>
-			<tr><td><b>Okcash inflation rate per annum:</b></td><td align = "right"><?=number_format($okstakereward / 1, 2);?>% / (1/3) Net Staking</td></tr>
-			<tr><td><b>Okcash inflation rate per annum after next block change event:</b></td><td align = "right"><b>6 OK</b> / Block Reward</td></tr> 
+			<tr><td><b>Actual Okcash inflation rate:</b></td><td align = "right"><b>6</b> OK coins / Block Reward</td></tr>
+			<tr><td><b>Okcash inflation rate after next block change event:</b></td><td align = "right"><b>3.9</b> OK coins / Block Reward</td></tr> 
 			<tr><td><b>Okcash inflation per day (USD):</b></td><td align = "right">$<?=number_format($blocksPerDay * $blockReward * $price);?></td></tr>
-			<tr><td><b>Okcash inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format(($coinsRemaining / 3) * $price);?></td></tr>
+			<tr><td><b>Okcash inflation until next blockhalf event based on current price (USD):</b></td><td align = "right">$<?=number_format(($coinsRemaining) * $price);?></td></tr>
 			<tr><td><b>Total blocks:</b></td><td align = "right"><a href="https://chainz.cryptoid.info/ok/" target="_blank"><span class="gg"><?=number_format($blocks);?></a></span></td></tr>
 			<tr><td><b>Blocks until mining reward is halved:</b></td><td align = "right"><?=number_format($blocksRemaining);?></td></tr>
 			<tr><td><b>Approximate block generation time:</b></td><td align = "right"><?=number_format($blockTargetSpacing, 1);?> seconds</td></tr>
