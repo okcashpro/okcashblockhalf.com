@@ -3,13 +3,13 @@
 // Okcashblockhalf settings
 // OK constants
 
-$blockStartingReward = 6.08;
+$blockStartingReward = 3.95;
 
 $fp = fopen('txt/blockStartingReward.txt', 'w') or die("can't open file");
 fwrite($fp, $blockStartingReward);
 fclose($fp);
 
-$blockHalvingSubsidy = 3528799;
+$blockHalvingSubsidy = 4531314;
 
 $fp = fopen('txt/blockHalvingSubsidy.txt', 'w') or die("can't open file");
 fwrite($fp, $blockHalvingSubsidy);
@@ -165,7 +165,7 @@ $fp = fopen('txt/blockString.txt', 'w') or die("can't open file");
 fwrite($fp, $blockString);
 fclose($fp);
 
-$blockReward = 6.08;
+$blockReward = 3.95;
 
 $fp = fopen('txt/blockReward.txt', 'w') or die("can't open file");
 fwrite($fp, $blockReward);
